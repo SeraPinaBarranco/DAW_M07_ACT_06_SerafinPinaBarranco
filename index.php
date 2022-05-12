@@ -1,6 +1,5 @@
 <?php
     require_once "basedatos.php";
-    
     function tipo_local(){
         $conn = connDB();
         $queryTipo = " SELECT tipo FROM locales GROUP BY tipo";    
@@ -61,4 +60,3 @@
 </body>
 </html>
 
-<!-- //AIzaSyBGvqvIeHAsg2QjDzywtHKIMNWtM1hTOJo -->
