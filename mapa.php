@@ -1,5 +1,7 @@
  <?php
     require_once "basedatos.php";
+    header("Set-Cookie: cross-site-cookie=whatever; SameSite=None; Secure");
+
 
     /*
         OpenWeatherMap
@@ -26,6 +28,7 @@
         $titulo= "Locales tipo: ". $tipo . ", localizados";
         //echo "<pre>";
         //echo "</pre>";
+        echo "local";
     }
 
     $ciudadTiempo;
@@ -33,7 +36,7 @@
     //*Si el formulario es la poblacion
     if (isset($_GET['poblacion'])) {
         $tipo = $_GET['poblacion'];
-        $q= $tipo;
+        $q= utf8_encode($tipo);
         $query = "SELECT * FROM locales WHERE poblacion= '$tipo'";
         $con = connDB();
 
@@ -54,7 +57,7 @@
         $icono= $objCity->weather[0]->icon;
         $temperatura= $objCity->main->temp;
         $viento= $objCity->wind->speed;
-        echo ($ciudadTiempo . "-" . $clima . "-" . $temperatura);
+        echo ("<span hidden>" . $ciudadTiempo . "-" . $clima . "-" . $temperatura . "</span>");
         //$coord = strval($objCity->coord);
 
         // echo "<pre>";
@@ -69,7 +72,7 @@
                 <h4>Velocidad del viento</h4>
                 <span> $viento km/h</span>
                </div>";
-           
+                         
     }
     $con = connDB();
 
@@ -140,8 +143,12 @@
      <div class="contenedor">
          <div id="map"></div>
          
-         <div class="tiempo"><?php echo $clima ?></div>
-
+        <?php if(isset($clima)){
+        ?>    
+        <div class="tiempo"><?php echo $clima ?></div>
+        <?php
+        }
+        ?>
      </div>
         
 
